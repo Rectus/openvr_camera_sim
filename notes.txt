@@ -1,0 +1,111 @@
+
+
+SteamVR uses IVRBlockQueue and IVRPaths to communicate camera per-frame data instead of using the IVRCameraComponent interface.
+
+Block queue:
+
+Path: "/lighthouse/camera/raw_frames"
+Header size: 512
+
+Compositor fails to start camera interface without this block queue created.
+
+Paths:
+
+"/frame_format" 
+int32_t 
+vr::ECameraVideoStreamFormat enum of the frame texture format.
+
+"/frame_width"
+int32_t
+
+"/frame_height"
+int32_t
+
+"/frame_sequence"
+uint64_t
+Incrementing repeating frame sequence number, may need to be n % 16.
+
+"/frame_size"
+int32_t
+Size of frame in bytes. (2 * 960) * 960 * 2 for index, width * height * bits per pixel (2 for YUYV).
+
+"/frame_time_monotonic"
+double
+Time since steam started in perf counter ticks.
+
+"/server_time_ticks"
+uint64_t
+Camera exposure timestamp in system ticks.
+
+"/delivery_rate"
+double
+Frame time in seconds. Is this smoothed?
+
+"/elapsed_time"
+double
+Time since steam started in seconds.
+
+
+
+Room View 3D related
+"/lighthouse/depthAugmentedPassthrough/processingMode"
+"/lighthouse/depthAugmentedPassthrough/meshIsUpToDate"
+"/lighthouse/depthAugmentedPassthrough/meshId"
+"/lighthouse/depthAugmentedPassthrough/leftMeshElementCount"
+"/lighthouse/depthAugmentedPassthrough/rightMeshElementCount"
+"/lighthouse/depthAugmentedPassthrough/rawMesh"
+"/lighthouse/depthAugmentedPassthrough/meshWidth"
+"/lighthouse/depthAugmentedPassthrough/meshHeight"
+
+"/steam/roomviewgeo"
+
+IVRIOBuffer
+"/user/head/camera/distorted"
+"/user/head/camera/undistorted"
+
+
+
+Lighthouse driver output with Index
+
+GetCameraFrameBufferingRequirements()
+pDefaultFrameQueueSize = 4
+pFrameBufferDataSize = 3686608 = (2 * 960) * 960 * 2
+
+SetCameraFrameBuffering()
+nFrameBufferCount = 4
+ppFrameBuffers = 4x buffer**
+nFrameBufferDataSize = 3686608 = (2 * 960) * 960 * 2
+
+GetCameraVideoStreamFormat() = 5 = CVS_FORMAT_YUYV16
+
+SetCameraVideoSinkCallback() registers callback, and calls GetVideoStreamFrame() on it
+
+GetVideoStreamFrame() returns false
+
+
+
+
+
+Settings
+
+camera:
+developerModes
+enableCameraSurfaces
+enableRawMode
+enableMJPEGMode
+preserveYUYV
+enableIOBuffers
+forcedExposureTime
+forcedGlobalGain
+forcedWhiteBalance
+
+driver_lighthouse:
+trackedCamera
+cameraFrameCaptureOffsetTime
+cameraFrameRate
+cameraScameraEdgeEnhancement
+cameraISPSyncDivisor
+
+
+
+
