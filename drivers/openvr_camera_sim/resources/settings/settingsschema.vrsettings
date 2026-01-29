@@ -1,0 +1,68 @@
+[
+    {
+        "title": "OpenVR Camera Sim",
+        "values": [
+			{
+                "name": "/settings/camera/enableConstructRoomView",
+                "control": "toggle",
+                "label": "Compositor Room View",
+                "on_label": "On",
+                "off_label": "Off"
+            },
+            {
+                "name": "/settings/openvr_camera_sim_display/window_x",
+                "control": "slider",
+                "label": "Window Position X",
+                "min": 0,
+                "max": 2048,
+                "step": 32,
+                "decimals": 0
+            },
+			{
+                "name": "/settings/openvr_camera_sim_display/window_y",
+                "control": "slider",
+                "label": "Window Position Y",
+                "min": 0,
+                "max": 2048,
+                "step": 32,
+                "decimals": 0
+            },
+			{
+                "name": "/settings/openvr_camera_sim_display/window_width",
+                "control": "slider",
+                "label": "Window Width",
+                "min": 0,
+                "max": 2048,
+                "step": 2,
+                "decimals": 0
+            },
+			{
+                "name": "/settings/openvr_camera_sim_display/window_height",
+                "control": "slider",
+                "label": "Window Height",
+                "min": 0,
+                "max": 2048,
+                "step": 2,
+                "decimals": 0
+            },
+			{
+                "name": "/settings/openvr_camera_sim_display/render_width",
+                "control": "slider",
+                "label": "Render Width",
+                "min": 0,
+                "max": 2048,
+                "step": 2,
+                "decimals": 0
+            },
+			{
+                "name": "/settings/openvr_camera_sim_display/render_height",
+                "control": "slider",
+                "label": "Render Height",
+                "min": 0,
+                "max": 2048,
+                "step": 2,
+                "decimals": 0
+            }
+        ]
+    }
+]

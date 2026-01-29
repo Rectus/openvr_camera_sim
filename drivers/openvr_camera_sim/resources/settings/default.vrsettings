@@ -1,0 +1,16 @@
+{
+   "openvr_camera_sim" : {
+		"enable" : true,
+		"loadPriority": 10000
+   },
+   "openvr_camera_sim_display": {
+	    "window_x": 100,
+	    "window_y": 100,
+	    "window_width": 1500,
+	    "window_height": 750,
+	    "render_width": 1024,
+	    "render_height": 768,
+	    "vsync_to_photons": 0.011,
+	    "display_frequency": 0
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"alwaysActivate": true,
+	"name" : "openvr_camera_sim",
+	"blocked_by_safe_mode": false,
+	"directory" : "",
+	"resourceOnly" : false,
+	"prefersUpperDeviceIndices" :  false,
+	"hmd_presence" : ["*.*"],
+	"redirectsDisplay" : true
+}
