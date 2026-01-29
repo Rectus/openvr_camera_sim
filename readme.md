@@ -7,6 +7,8 @@ The passthrough camera systems in SteamVR seem to be hardcoded for the lighthous
 
 The camera output works with both the 2D Room View mode, and applications using the `IVRTrackedCamera` interface. The stereo correct 3D Room View mode is not currently supported.
 
+Note: I haven't verified if all the projection parameters are correct with a real camera.
+
 The main files of interest are:
 camera_component.cpp - Camera implementation
 camera_device.cpp - HMD implementation
