@@ -3,7 +3,6 @@
 #include <windows.h>
 
 #include <iostream>
-//#include <signal.h>
 
 
 #include "vr_blockqueue_client.h"
@@ -145,19 +144,7 @@ int main()
 		vr::PropertyContainerHandle_t readHandle;
 		uint8_t* pBuffer;
 
-		/*bool bHasReaders = false;
-		queueError = vr::VRBlockQueue()->QueueHasReader(rawFrameQueue, &bHasReaders);
-		if (queueError != vr::EBlockQueueError_BlockQueueError_None)
-		{
-			std::cerr << "QueueHasReader error: " << (int)queueError << std::endl;
-			bRun = false;
-		}
-		else
-		{
-			std::cout << "Queue has reader: " << bHasReaders << std::endl;
-		}*/
-
-		queueError = vr::VRBlockQueue()->WaitAndAcquireReadOnlyBlock(rawFrameQueue, &readHandle, (void**)&pBuffer, vr::EBlockQueueReadType_BlockQueueRead_Next, 100);
+		queueError = vr::VRBlockQueue()->WaitAndAcquireReadOnlyBlock(rawFrameQueue, &readHandle, (void**)&pBuffer, vr::EBlockQueueReadType_BlockQueueRead_Next, 10);
 		if (queueError == vr::EBlockQueueError_BlockQueueError_BlockNotAvailable)
 		{
 			//std::cout << "No block available" << std::endl;
@@ -165,8 +152,9 @@ int main()
 		}
 		else if (queueError != vr::EBlockQueueError_BlockQueueError_None)
 		{
-			std::cerr << "AcquireReadOnlyBlock error: " << (int)queueError << std::endl;
+			std::cerr << "WaitAndAcquireReadOnlyBlock error: " << (int)queueError << std::endl;
 			bRun = false;
+			continue;
 		}
 
 		std::cout << "Read-only block acquired: 0x" << std::hex <<(uint64_t)pBuffer << std::dec << std::endl;
@@ -194,43 +182,6 @@ int main()
 		vr::PathRead_t read = {};
 		read.unRequiredBufferSize = 0;
 		read.pszPath = nullptr;
-
-
-		/*read.ulPath = formatHandle;
-		read.pvBuffer = &format;
-		read.unBufferSize = sizeof(format);
-		read.unTag = vr::k_unInt32PropertyTag;
-
-		vr::ETrackedPropertyError propError = vr::VRPaths()->ReadPathBatch(readHandle, &read, 1);
-		if (propError != vr::TrackedProp_Success)
-		{
-			std::cerr << "Error reading /format: " << (int)propError << std::endl;
-		}
-		std::cout << "/format " << *(int32_t*)read.pvBuffer << std::endl;
-
-		read.ulPath = heightHandle;
-		read.pvBuffer = &height;
-		read.unBufferSize = sizeof(height);
-		read.unTag = vr::k_unInt32PropertyTag;
-
-		propError = vr::VRPaths()->ReadPathBatch(readHandle, &read, 1);
-		if (propError != vr::TrackedProp_Success)
-		{
-			std::cerr << "Error reading /height: " << (int)propError << std::endl;
-		}
-		std::cout << "/height " << *(int32_t*)read.pvBuffer << std::endl;
-
-		read.ulPath = widthHandle;
-		read.pvBuffer = &width;
-		read.unBufferSize = sizeof(width);
-		read.unTag = vr::k_unInt32PropertyTag;
-
-		propError = vr::VRPaths()->ReadPathBatch(readHandle, &read, 1);
-		if (propError != vr::TrackedProp_Success)
-		{
-			std::cerr << "Error reading /width: " << (int)propError << std::endl;
-		}
-		std::cout << "/width " << *(int32_t*)read.pvBuffer << std::endl;*/
 
 		read.ulPath = frameSizeHandle;
 		read.pvBuffer = &frameSize;
@@ -313,15 +264,6 @@ int main()
 		}
 
 		std::cout << std::endl;
-	}
-
-	if (rawFrameQueue != 0)
-	{
-		queueError = vr::VRBlockQueue()->Destroy(rawFrameQueue);
-		if (queueError != vr::EBlockQueueError_BlockQueueError_None)
-		{
-			std::cerr << "Queue Destroy error: " << (int)queueError << std::endl;
-		}
 	}
 
 	vr::VR_Shutdown();

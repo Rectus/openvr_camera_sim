@@ -233,6 +233,8 @@ void D3D11Renderer::Render(const vr::PresentInfo_t* pPresentInfo, bool bWaitForV
 
 	//VR_DRIVER_LOG_FORMAT("Compositor output: {} x {} x {}, format: {}", frameDesc.Width, frameDesc.Height, frameDesc.ArraySize, (int)frameDesc.Format)
 
+	// Note: The shared texture claims to be a linear RGB texture, while containing sRGB encoded data.
+
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Format = frameDesc.Format;

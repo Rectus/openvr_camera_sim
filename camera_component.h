@@ -1,19 +1,6 @@
 #pragma once
 
 
-struct CameraFrameContainer
-{
-	vr::CameraVideoStreamFrame_t FrameData = {};
-	//std::vector<uint8_t> Framebuffer = {};
-	uint8_t * Framebuffer = nullptr;
-	std::shared_mutex AccessMutex;
-
-	CameraFrameContainer()
-	{
-
-	}
-};
-
 class CameraComponent : public vr::IVRCameraComponent
 {
 public:
@@ -62,20 +49,30 @@ protected:
 	vr::TrackedDeviceIndex_t m_HMDDeviceId = -1;
 	int m_deviceNum = 0;
 	int m_selectedMediaType = -1;
-	vr::ECameraVideoStreamFormat m_streamFormat;
+	vr::ECameraVideoStreamFormat m_streamFormat = vr::CVS_FORMAT_UNKNOWN;
 	std::string m_cameraName;
 
-	uint32_t m_renderTargetWidth = 0;
-	uint32_t m_renderTargetHeight = 0;
-	uint32_t m_renderTargetBPP = 0;
+	uint32_t m_textureWidth = 0;
+	uint32_t m_textureHeight = 0;
+	uint32_t m_textureBPP = 0;
 
 	uint32_t m_frameWidth = 0;
 	uint32_t m_frameHeight = 0;
 
-	float m_focalX = 0;
-	float m_focalY = 0;
-	float m_centerX = 0;
-	float m_centerY = 0;
+	float m_focalLeftX = 0;
+	float m_focalLeftY = 0;
+	float m_centerLeftX = 0;
+	float m_centerLeftY = 0;
+
+	float m_focalRightX = 0;
+	float m_focalRightY = 0;
+	float m_centerRightX = 0;
+	float m_centerRightY = 0;
+
+	std::vector<int32_t> m_distortionFunction;
+	std::vector<double> m_distortionCoeff;
+
+	uint64_t m_frameCount = 0;
 
 	uint64_t m_frameSequence = 0;
 	double m_frameTimeMonotonic = 0.0;
@@ -83,23 +80,24 @@ protected:
 	double m_deliveryRate = 0.0;
 	double m_elapsedTime = 0.0;
 
-	uint64_t m_frameCount = 0;
+	LARGE_INTEGER m_perfCounterFrequency;
 
 	LARGE_INTEGER m_startTime;
 	LARGE_INTEGER m_lastFrameTime;
 	LARGE_INTEGER m_firstStartTime;
 	bool m_bIsFirstStart = true;
 
-	vr::PropertyContainerHandle_t m_rawFrameQueue = 0;
-
 	std::thread m_frameServeThread;
 	std::atomic<bool> m_bRunThread = true;
 
-	std::vector<uint8_t*> m_framebuffers;
-	std::shared_ptr<CameraFrameContainer> m_currentFrame;
-	std::shared_ptr<CameraFrameContainer> m_nextFrame;
-
-	std::mutex m_frameContainerMutex;
-
 	vr::ICameraVideoSinkCallback* m_pCameraVideoSinkCallback = nullptr;
+
+	vr::PropertyContainerHandle_t m_rawFrameQueue = 0;
+
+	vr::PathHandle_t m_frameSequenceHandle;
+	vr::PathHandle_t m_frameSizeHandle;
+	vr::PathHandle_t m_frameTimeMonotonicHandle;
+	vr::PathHandle_t m_serverTimeTicksHandle;
+	vr::PathHandle_t m_deliveryRateHandle;
+	vr::PathHandle_t m_elapsedTimeHandle;
 };

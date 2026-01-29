@@ -10,7 +10,6 @@ vr::EVRInitError DeviceProvider::Init(vr::IVRDriverContext* pDriverContext)
     m_cameraDevice = std::make_unique<CameraDevice>();
 
     bool ret = vr::VRServerDriverHost()->TrackedDeviceAdded("openvr_camera_sim_virtual_display_001", vr::TrackedDeviceClass_HMD, m_cameraDevice.get());
-    //bool ret = vr::VRServerDriverHost()->TrackedDeviceAdded("openvr_camera_sim_virtual_display_001", vr::TrackedDeviceClass_DisplayRedirect, m_cameraDevice.get());
 
     if (ret)
     {

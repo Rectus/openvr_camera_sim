@@ -97,7 +97,8 @@ PropertyContainerHandle_t* pulBlockHandle, void** ppvBuffer, EBlockQueueReadType
 	static const char* IVRPaths_Version = "IVRPaths_001";
 	static const char* IVRBlockQueue_Version = "IVRBlockQueue_005";
 
-	IVRPaths* VRPaths()
+
+	static IVRPaths* _VRPaths()
 	{
 		static IVRPaths* pPaths = nullptr;
 		if (pPaths == nullptr)
@@ -108,7 +109,7 @@ PropertyContainerHandle_t* pulBlockHandle, void** ppvBuffer, EBlockQueueReadType
 		return pPaths;
 	}
 
-	IVRBlockQueue* VRBlockQueue()
+	static IVRBlockQueue* _VRBlockQueue()
 	{
 		static IVRBlockQueue* pBlockQueue = nullptr;
 		if (pBlockQueue == nullptr)
@@ -118,6 +119,9 @@ PropertyContainerHandle_t* pulBlockHandle, void** ppvBuffer, EBlockQueueReadType
 		}
 		return pBlockQueue;
 	}
+
+	inline IVRPaths* VRPaths() { return _VRPaths(); }
+	inline IVRBlockQueue* VRBlockQueue() { return _VRBlockQueue(); }
 }
 
 #endif

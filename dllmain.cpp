@@ -1,6 +1,5 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
+
 #include "pch.h"
-#include "openvr_driver.h"
 #include "device_provider.h"
 
 HMODULE g_hModule;

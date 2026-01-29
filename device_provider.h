@@ -2,7 +2,6 @@
 #include <memory>
 
 #include "camera_device.h"
-#include "openvr_driver.h"
 
 class DeviceProvider : public vr::IServerTrackedDeviceProvider 
 {

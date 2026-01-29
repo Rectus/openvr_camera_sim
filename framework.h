@@ -1,7 +1,6 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <wrl.h>
 #include <winnt.h>
@@ -25,6 +24,7 @@ using Microsoft::WRL::ComPtr;
 #include <shared_mutex>
 
 #include "openvr_driver.h"
+#include "vr_blockqueue.h"
 
 #define VR_DRIVER_LOG_FORMAT(...) {\
 std::string _message = std::format(__VA_ARGS__); \

@@ -70,8 +70,11 @@ vr::EVRInitError CameraDevice::Activate(uint32_t unObjectId)
 
 	vr::VRProperties()->SetStringProperty(container, vr::Prop_ModelNumber_String, "openvr_camera_sim_virtual_display");
 
-	vr::VRProperties()->SetUint64Property(container, vr::Prop_FirmwareVersion_Uint64, 0x56456bA0); // > 0x56456b9f
-	vr::VRProperties()->SetUint64Property(container, vr::Prop_FPGAVersion_Uint64, 0x104); // > 0x103
+	// HMD firmware version has to be set above 0x56456b9f or the the passthrough fails to start.
+	vr::VRProperties()->SetUint64Property(container, vr::Prop_FirmwareVersion_Uint64, 0x56456bA0);
+
+	// FPGA firmware version has to be set above 0x103 or the the passthrough fails to start.
+	vr::VRProperties()->SetUint64Property(container, vr::Prop_FPGAVersion_Uint64, 0x104);
 
 	const float ipd = vr::VRSettings()->GetFloat(vr::k_pch_SteamVR_Section, vr::k_pch_SteamVR_IPD_Float);
 	vr::VRProperties()->SetFloatProperty(container, vr::Prop_UserIpdMeters_Float, ipd);
@@ -349,7 +352,7 @@ void CameraDevice::WaitForPresent()
 		QueryPerformanceCounter(&currTime);
 
 		uint64_t frameIntervalTicks = perfFrequency.QuadPart / FRAME_RATE;
-		int framesElaped = max((currTime.QuadPart - m_lastVsync.QuadPart) / frameIntervalTicks, 0);
+		uint64_t framesElaped = max((currTime.QuadPart - m_lastVsync.QuadPart) / frameIntervalTicks, 0);
 		m_lastVsync.QuadPart += framesElaped * frameIntervalTicks;
 		m_frameCount += framesElaped;
 	}

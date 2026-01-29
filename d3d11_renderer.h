@@ -1,6 +1,7 @@
 
 #pragma once
 
+
 union LUID_UNION
 {
 	LUID structLuid;

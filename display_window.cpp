@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "display_window.h"
 
@@ -76,11 +77,8 @@ bool DisplayWindow::InitWindow()
     wcex.cbWndExtra = 0;
     wcex.hInstance = hModuleHandle;
     wcex.hIcon = NULL;
-    //wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-    //wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_OPENVRAMBIENTLIGHT);
     wcex.lpszClassName = WINDOW_CLASS_NAME;
-    //wcex.hIconSm = g_iconOn;
 
     if (RegisterClassExW(&wcex) == 0)
     {
@@ -90,9 +88,7 @@ bool DisplayWindow::InitWindow()
     }
 
     
-
     m_window = CreateWindowExW(WS_EX_OVERLAPPEDWINDOW, WINDOW_CLASS_NAME, WINDOW_TITLE, WS_OVERLAPPEDWINDOW, m_windowPosX, m_windowPosY, m_windowWidth, m_windowHeight, NULL, NULL, hModuleHandle, nullptr);
-    //m_window = CreateWindowExW(0, WINDOW_CLASS_NAME, WINDOW_TITLE, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, 800, 600, NULL, NULL, hModuleHandle, nullptr);
 
 
     if (!m_window)
@@ -113,31 +109,19 @@ bool DisplayWindow::InitWindow()
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    //std::string msg = std::format("WindowProc: 0x{:x} {} {}", message, wParam, lParam);
-    //vr::VRDriverLog()->Log(msg.c_str());
-
     switch (message)
     {
     case WM_PAINT:
     case WM_MOVE:
-        //vr::VRDriverLog()->Log("WindowProc: WM_PAINT");
-
-        /*{
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-
-            FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-
-            EndPaint(hWnd, &ps);
-        }*/
+        
         break;
 
     case WM_CLOSE:
-        //vr::VRDriverLog()->Log("WindowProc: WM_CLOSE");
+
         break;
 
     case WM_DESTROY:
-        //vr::VRDriverLog()->Log("WindowProc: WM_DESTROY");
+
         break;
 
     default:
@@ -146,118 +130,4 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
     }
 
     return 0;
-
-
-    //return DefWindowProc(hWnd, message, wParam, lParam);
-
-    //switch (message)
-    //{
-    //case WM_COMMAND:
-    //{
-    //    int wmId = LOWORD(wParam);
-    //    switch (wmId)
-    //    {
-    //    case SC_KEYMENU:
-    //        return 0; // Disable alt menu
-    //        break;
-
-    //    default:
-    //        return DefWindowProc(hWnd, message, wParam, lParam);
-    //    }
-    //}
-    //break;
-
-    //case WM_PAINT:
-    //case WM_MOVE: // Paint on move to prevent the window from blanking out (only works partially).
-
-    //    if (g_bIsSettingsWindowShown && !g_bIsPainting && g_settingsMenu.get())
-    //    {
-    //        g_bIsPainting = true;
-    //        g_settingsMenu->TickMenu();
-    //        g_bIsPainting = false;
-    //    }
-
-    //    break;
-
-    //case WM_CLOSE:
-    //    if (g_bExitOnClose)
-    //    {
-    //        g_bRun = false;
-    //    }
-    //    else
-    //    {
-    //        g_bIsSettingsWindowShown = false;
-    //        ShowWindow(g_hSettingsWindow, SW_HIDE);
-    //    }
-
-    //    break;
-
-    //case WM_DESTROY:
-    //    g_bRun = false;
-    //    break;
-
-
-    //case WM_TRAYMESSAGE:
-    //    switch (lParam)
-    //    {
-    //    case WM_LBUTTONDBLCLK:
-
-    //        KillTimer(g_hSettingsWindow, g_trayClickTimer);
-    //        g_bIsDoubleClicking = true;
-
-    //        break;
-
-    //    case WM_LBUTTONDOWN:
-
-    //        g_trayClickTimer = SetTimer(g_hSettingsWindow, 100, GetDoubleClickTime(), TrayClickTimerCallback);
-    //        GetCursorPos(&g_trayCursorPos);
-
-    //        break;
-
-    //    case WM_LBUTTONUP:
-
-    //        if (g_bIsDoubleClicking)
-    //        {
-    //            g_bIsDoubleClicking = false;
-    //            ShowWindow(g_hSettingsWindow, g_bIsSettingsWindowShown ? SW_HIDE : SW_SHOW);
-    //            SetForegroundWindow(g_hSettingsWindow);
-    //            g_bIsSettingsWindowShown = !g_bIsSettingsWindowShown;
-    //        }
-
-    //        break;
-
-    //    case WM_RBUTTONUP:
-
-    //        GetCursorPos(&g_trayCursorPos);
-    //        TrayShowMenu();
-    //        break;
-
-    //    default:
-    //        return DefWindowProc(hWnd, message, wParam, lParam);
-    //    }
-    //    break;
-
-    //case WM_SETTINGS_UPDATED:
-
-    //    DispatchSettingsUpdated(LOWORD(wParam));
-
-    //    break;
-
-    //case WM_MENU_QUIT:
-
-    //    g_bRun = false;
-
-    //    break;
-
-    //default:
-
-    //    if (!g_settingsMenu.get() || !g_settingsMenu->HandleWin32Events(hWnd, message, wParam, lParam))
-    //    {
-    //        return DefWindowProc(hWnd, message, wParam, lParam);
-    //    }
-    //}
-
-
-
-    //return 0;
  }
